@@ -55,38 +55,47 @@ public class ReservationService {
         reservation.setDateFin(datefin);
         reservation.setNumChambre(numChambre);
 
-        reservationRepository.save(reservation);
+        return reservationRepository.save(reservation);
 
     }
 
 
     @Transactional
     // CREATE
-    public CitiesEntity addCity(String name, String zipCode) {
-        CitiesEntity city = new CitiesEntity();
-        return cityRepository.save(setCity(city, name, zipCode));
+    public ReservationsEntity addReservation(ClientsEntity client,
+                                             HotelsEntity hotel,
+                                             Date datedeb,
+                                             Date datefin,
+                                             int numChambre) {
+        ReservationsEntity reservation = new ReservationsEntity();
+        return reservationRepository.save(setReservation(reservation,client, hotel, datedeb, datefin, numChambre));
 
     }
 
 
     @Transactional
-    public CitiesEntity updateCityById(int id, String name, String zipCode) {
-        Optional<CitiesEntity> cityOptional = getCityById(id);
-        if (cityOptional.isPresent()) {
-            return cityRepository.save(setCity(cityOptional.get(), name, zipCode));
+    public ReservationsEntity updateReservationById(int id,
+                                                    ClientsEntity client,
+                                                    HotelsEntity hotel,
+                                                    Date datedeb,
+                                                    Date datefin,
+                                                    int numChambre) {
+        Optional<ReservationsEntity> reservationOptional = getReservationById(id);
+        if (reservationOptional.isPresent()) {
+            return reservationRepository.save(setReservation(reservationOptional.get(), client, hotel, datedeb,datefin,numChambre));
         } else {
-            throw new ObjectNotFoundException(id, "City not found");
+            throw new ObjectNotFoundException(id, "pas de réservation");
 
 
         }
     }
 
     @Transactional
-    public void deleteCityById(int id) {
-        Optional<CitiesEntity> cityOptional = getCityById(id);
+    public void deleteReservationById(int id) {
+        Optional<ReservationsEntity> reservationOptional = getReservationById(id);
 
-        if (cityOptional.isPresent()) {
-            cityRepository.delete(cityOptional.get());
+        if (reservationOptional.isPresent()) {
+            reservationRepository.delete(reservationOptional.get());
         } else {
             throw new ObjectNotFoundException(id, "city unknown");
 
