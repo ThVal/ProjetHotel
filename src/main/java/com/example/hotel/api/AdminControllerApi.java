@@ -1,9 +1,9 @@
 package com.example.hotel.api;
 
 import com.example.hotel.model.entities.AdminsEntity;
-import com.example.hotel.model.entities.ClientsEntity;
+
 import com.example.hotel.model.services.AdminService;
-import com.example.hotel.model.services.ClientService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("api/admin")
+@RequestMapping("api/admins")
 
 public class AdminControllerApi {
 
@@ -33,7 +33,7 @@ public class AdminControllerApi {
         if (adminOptional.isPresent()) {
             return adminOptional.get();
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The hotel is not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "admin found");
 
         }
 

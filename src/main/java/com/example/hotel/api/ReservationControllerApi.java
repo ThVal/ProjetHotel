@@ -1,16 +1,12 @@
 package com.example.hotel.api;
 
-import com.example.hotel.model.entities.ClientsEntity;
-import com.example.hotel.model.entities.HotelsEntity;
 import com.example.hotel.model.entities.ReservationsEntity;
-import com.example.hotel.model.services.HotelService;
 import com.example.hotel.model.services.ReservationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +32,7 @@ public class ReservationControllerApi {
         if (reservationOptional.isPresent()) {
             return reservationOptional.get();
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The hotel is not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The reserve is not found");
         }
     }
 
@@ -50,12 +46,6 @@ public class ReservationControllerApi {
                         reservationInput.getDateFin(),
                         reservationInput.getNumChambre()));
     }
-    /*ReservationsEntity reservation,
-    ClientsEntity client,
-    HotelsEntity hotel,
-    Date datedeb,
-    Date datefin,
-    int numChambre) {*/
 
     @PutMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<ReservationsEntity> editReservationApi(@PathVariable("id") int id, @RequestBody ReservationsEntity reservationInput) {
@@ -83,7 +73,7 @@ public class ReservationControllerApi {
 
 
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The hotel is not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "reserve is not found");
         }
     }
 

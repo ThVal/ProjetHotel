@@ -14,7 +14,7 @@ public class ClientsEntity implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idClient;
+    private int idClient;
 
     @Basic
     private String nomCompletClient;
@@ -28,11 +28,11 @@ public class ClientsEntity implements Serializable {
     @Basic
     private String adresseClient;
 
-    public Integer getIdClient() {
+    public int getIdClient() {
         return idClient;
     }
 
-    public void setIdClient(Integer idClient) {
+    public void setIdClient(int idClient) {
         this.idClient = idClient;
     }
 

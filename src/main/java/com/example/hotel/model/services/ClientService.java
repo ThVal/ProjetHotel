@@ -2,7 +2,6 @@ package com.example.hotel.model.services;
 
 
 import com.example.hotel.model.entities.ClientsEntity;
-import com.example.hotel.model.entities.HotelsEntity;
 import com.example.hotel.model.repositories.ClientRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;

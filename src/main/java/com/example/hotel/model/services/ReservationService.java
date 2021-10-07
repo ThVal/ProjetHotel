@@ -1,18 +1,18 @@
 package com.example.hotel.model.services;
 
 import com.example.hotel.model.entities.ClientsEntity;
-import com.example.hotel.model.entities.HotelsEntity;
 import com.example.hotel.model.entities.ReservationsEntity;
 import com.example.hotel.model.repositories.ReservationRepository;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+
+@Service
 public class ReservationService {
 
 
@@ -21,6 +21,8 @@ public class ReservationService {
     private final HotelService hotelService;
 
     private final ClientService clientService;
+
+
 
 
 
@@ -43,15 +45,15 @@ public class ReservationService {
 
 
     private ReservationsEntity setReservation(ReservationsEntity reservation,
-                                              ClientsEntity client,
-                                              HotelsEntity hotel,
+                                              int clientId,
+                                              int hotelId,
                                               Date datedeb,
                                               Date datefin,
                                               int numChambre) {
 
 
-        reservation.setClient(client);
-        reservation.setHotel(hotel);
+        reservation.setClient(clientService.getClientById(clientId).get());
+        reservation.setHotel(hotelService.getHotelById(hotelId).get());
         reservation.setDateDebut(datedeb);
         reservation.setDateFin(datefin);
         reservation.setNumChambre(numChambre);
@@ -63,21 +65,27 @@ public class ReservationService {
 
     @Transactional
     // CREATE
-    public ReservationsEntity addReservation(ClientsEntity client,
-                                             HotelsEntity hotel,
+    public ReservationsEntity addReservation(int clientId,
+                                             int hotelId,
                                              Date datedeb,
                                              Date datefin,
                                              int numChambre) {
         ReservationsEntity reservation = new ReservationsEntity();
-        return reservationRepository.save(setReservation(reservation,client, hotel, datedeb, datefin, numChambre));
+        return reservationRepository.save(setReservation(
+                reservation,
+                clientId,
+                hotelId,
+                datedeb,
+                datefin,
+                numChambre));
 
     }
 
 
     @Transactional
     public ReservationsEntity updateReservationById(int id,
-                                                    ClientsEntity client,
-                                                    HotelsEntity hotel,
+                                                    int client,
+                                                    int hotel,
                                                     Date datedeb,
                                                     Date datefin,
                                                     int numChambre) {
