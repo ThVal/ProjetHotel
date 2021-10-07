@@ -2,6 +2,7 @@ package com.example.hotel.model.services;
 
 
 import com.example.hotel.model.entities.ClientsEntity;
+import com.example.hotel.model.entities.HotelsEntity;
 import com.example.hotel.model.repositories.ClientRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,24 @@ public class ClientService {
         return client;
 
     }
+
+
+    @Transactional
+    public ClientsEntity addClient(
+                                   String nomCompletClient,
+                                   String telephoneClient,
+                                   String emailClient,
+                                   String adresseClient) {
+
+        ClientsEntity client = new ClientsEntity();
+        return clientRepository.save(setClient(client,
+                nomCompletClient,
+                telephoneClient,
+                emailClient,
+                adresseClient));
+
+    }
+
 
     @Transactional
     public ClientsEntity updateClientById(int id,

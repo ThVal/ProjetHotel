@@ -103,7 +103,7 @@ public class HotelService {
 
             hotelRepository.delete(hotelOptional.get());}
         else {
-            throw new ObjectNotFoundException(id, "hotel non trouvé");
+            throw new ObjectNotFoundException(id, "Hotel non trouvé");
         }
     }
 
