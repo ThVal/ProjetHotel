@@ -1,4 +1,4 @@
-/* package com.example.hotel.model.security;
+ package com.example.hotel.model.security;
 
 import com.example.hotel.model.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,8 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
+import javax.sql.DataSource;
+
 @Configuration
-@EnableWebSecurity
 @EnableGlobalMethodSecurity (
         securedEnabled = true,
         jsr250Enabled = true,
@@ -28,11 +28,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private AdminDetailsServiceImpl adminDetailsServiceImp;
 
     @Override
     protected void configure (AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(adminDetailsServiceImp).passwordEncoder(passwordEncoder());
 
     }
 
@@ -41,7 +41,7 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
     public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
         protected void configure(HttpSecurity http) throws Exception {
             http.cors().and()
-                    .antMatcher("/api/**")
+                    .antMatcher("/api/**") // sécurité sur tout ce qui est api/**
                     .csrf()
                     .disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // On utilise pas les sessions, toute req est déconnectée suite à l'exécution
                     .and().authorizeRequests(authorize -> authorize
@@ -54,31 +54,31 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
     @Configuration
     @Order(2)
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-*/
 
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
+
+       @Override
+       protected void configure(HttpSecurity http) throws Exception {
             //formLogin = utiliser un formulaire d'authetification - loginPage : chemin de l'authentification
-//            http.formLogin().loginPage("/login").defaultSuccessUrl("/");
+           http.formLogin().loginPage("/login").defaultSuccessUrl("/");
             // Autoriser un accès anonyme sur les routes /login et /css/**
-//            http.authorizeRequests().antMatchers("/login" , "/css/**" ).permitAll();
+           http.authorizeRequests().antMatchers("/login" , "/css/**" ).permitAll();
             // Autoriser les actions post pour les admins : ROLE_ADMIN
-//            http.authorizeRequests().antMatchers("**/add" , "**/edit/**" , "**/delete/**").hasRole("ADMIN");
+           http.authorizeRequests().antMatchers("**/add" , "**/edit/**" , "**/delete/**").hasRole("ADMIN");
 
             // Tous les utilisateurs qui ne sont pas mentionnés en haut devrait s'authentifier
-//            http.authorizeRequests().anyRequest().authenticated();
+            http.authorizeRequests().anyRequest().authenticated();
 
             // désactiver la protection csrf
-//            http.csrf().disable();
-//        }
-//    }
+            http.csrf().disable();
+       }
+    }
 
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+   @Bean
+   public PasswordEncoder passwordEncoder() {
+       return new BCryptPasswordEncoder();
+   }
 
-//}
+}
 
 
