@@ -6,6 +6,7 @@ import com.example.hotel.model.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/api/login")
 public class LoginControllerApi {
 
     @Autowired
@@ -24,20 +25,24 @@ public class LoginControllerApi {
 
     @PostMapping(path = "", produces = "application/json")
     ResponseEntity<AdminsEntity> checkLogin(@RequestBody AdminsEntity userv ){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println( userv.getUsername() );
         System.out.println(userv);
         System.out.println("CHOCOLATINE");
 
         try{
             AdminsEntity user = adminRepository.findByUsername(userv.getUsername());
-            return ResponseEntity.ok() // ok => 200
-                    .body(user);
+            if (encoder.matches(userv.getPassword(), user.getPassword()))
+
+                {return ResponseEntity.ok() // ok => 200
+                        .body(user);}
+            else{ System.out.println("Je suis ici");
+                throw new ResponseStatusException( HttpStatus.BAD_REQUEST , "pain au chocolat = nul" );}
 
         }catch ( Exception e ){
             System.out.println("Je suis ici");
             throw new ResponseStatusException( HttpStatus.BAD_REQUEST , e.getMessage() ); // KO : 400
         }
-
     }
 
 

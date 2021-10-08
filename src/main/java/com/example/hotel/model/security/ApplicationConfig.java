@@ -51,29 +51,6 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
         }
     }
 
-    @Configuration
-    @Order(2)
-    public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-
-
-       @Override
-       protected void configure(HttpSecurity http) throws Exception {
-            //formLogin = utiliser un formulaire d'authetification - loginPage : chemin de l'authentification
-           http.formLogin().loginPage("/login").defaultSuccessUrl("/");
-            // Autoriser un accès anonyme sur les routes /login et /css/**
-           http.authorizeRequests().antMatchers("/login" , "/css/**" ).permitAll();
-            // Autoriser les actions post pour les admins : ROLE_ADMIN
-           http.authorizeRequests().antMatchers("**/add" , "**/edit/**" , "**/delete/**").hasRole("ADMIN");
-
-            // Tous les utilisateurs qui ne sont pas mentionnés en haut devrait s'authentifier
-            http.authorizeRequests().anyRequest().authenticated();
-
-            // désactiver la protection csrf
-            http.csrf().disable();
-       }
-    }
-
-
    @Bean
    public PasswordEncoder passwordEncoder() {
        return new BCryptPasswordEncoder();

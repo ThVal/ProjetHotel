@@ -18,7 +18,6 @@ public class HotelsEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idHotel;
 
-
     @Basic
     private String nom;
 
