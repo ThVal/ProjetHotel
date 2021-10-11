@@ -1,1 +1,123 @@
-<p>hotel works!</p>
+<main class="container">
+    <div class="alert alert-success" *ngIf="success">Opération effectuée avec succès</div>
+
+    <div class="h2">Liste des hotels</div>
+    <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary float-end" (click)="resetForm()">Nouvel 
+        Hotel</button>
+
+    <br><br>
+    <div class="row">
+        <div class="col-9">
+            <div class="input-group mb-3 clearfix">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Rechercher un hotel" aria-describedby="basic-addon1" [(ngModel)]="search">
+            </div>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btn-primary" (click)="loadHotel()">Rechercher</button>
+        </div>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Nom</th>
+                <th>nombre d'étoiles</th>
+                <th>ville</th>
+                <th>Tel</th>
+                <th>Mail</th>
+                
+                <th><i class="fa fa-cogs"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let hotel of hotels">
+                <td>{{ hotel.idHotel}}</td>
+                <td>{{ hotel.nom}}</td>
+                <td>{{ hotel.nbEtoile}}</td>
+                <td>{{ hotel.ville}}</td>
+                <td>{{ hotel.telephoneHotel}}</td>
+                <td>{{ hotel.emailHotel}}</td>
+            
+                <td><button (click)="edit( hotel.idHotel )" data-bs-toggle="modal" data-bs-target="#exampleModal">edit</button>
+                    <button (click)="delete( hotel.idHotel )" class="ps-2">delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+</main>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        
+        
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="hotel.idHotel == undefined">Ajouter un hotel</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="hotel.idHotel != undefined">Editer un hotel</h5>
+                    <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+            <form name="villeForm" (submit)="submitForm()">
+                    
+
+                    <div class="alert alert-danger" *ngIf="error">Une erreur est survenue, veuillez vérifier votre saisie
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" minlength="2" required [(ngModel)]="hotel.nom">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nbEtoiles" class="form-label">nombre d'étoiles</label>
+                        <input type="nbEtoiles" name="nbEtoiles" class="form-control" id="nbEtoiles" placeholder="nbEtoiles" minlength="1" required [(ngModel)]="hotel.nbEtoile">
+                    </div>
+                    <div class="mb-3">
+                        <label for="ville" class="form-label">Ville</label>
+                        <input type="text" class="form-control" id="ville" name="telephone" placeholder="ville" minlength="2" required [(ngModel)]="hotel.ville">
+                    </div>
+                    <div class="mb-3">
+                        <label for="telephone" class="form-label">Tel</label>
+                        <input type="text" class="form-control" id="tel" name="telephone" placeholder="Tel" minlength="2" required [(ngModel)]="hotel.telephoneHotel">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="email" minlength="2" required [(ngModel)]="hotel.emailHotel">
+                    </div>
+                    <button type="submit" class="btn btn-secondary" id="submitbtn">Valider</button>
+
+                </form>
+                    </div>
+                </div>
+
+            
+        
+
+<!--<div class="row">
+    <ng-container *ngFor="let hotel of hotels">
+        <ng-container *ngTemplateOutlet="clientCardTemplate;context:{item:hotel}"></ng-container>
+    </ng-container>
+</div>
+
+<ng-template #clientCardTemplate let-client="item">
+    <div class="col-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{hotel.nom}}
+                    manque les {{ }} 
+                </h5>
+                <p class="card-text">
+                    Tel : {{client.email}}
+                    <br> Email : {{client.adressel}}
+                </p>
+            </div>
+        </div>
+    </div>
+</ng-template>-->
