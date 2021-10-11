@@ -1,0 +1,116 @@
+<main class="container">
+    <div class="alert alert-success" *ngIf="success">Opération effectuée avec succès</div>
+
+    <div class="h2">Liste des clients</div>
+    <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary float-end" (click)="resetForm()">Nouveau
+        client</button>
+
+    <br><br>
+    <div class="row">
+        <div class="col-9">
+            <div class="input-group mb-3 clearfix">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Rechercher un client" aria-describedby="basic-addon1" [(ngModel)]="search">
+            </div>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btn-primary" (click)="loadClient()">Rechercher</button>
+        </div>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Nom</th>
+                <th>Tel</th>
+                <th>Mail</th>
+                <th>Adresse</th>
+                <th><i class="fa fa-cogs"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let client of clients">
+                <td>{{ client.idClient}}</td>
+                <td>{{ client.nomCompletClient}}</td>
+                <td>{{ client.telephoneClient}}</td>
+                <td>{{ client.emailClient}}</td>
+                <td>{{ client.adresseClient}}</td>
+            
+                <td><button (click)="edit( client.idClient )" data-bs-toggle="modal" data-bs-target="#exampleModal">edit</button>
+                    <button (click)="delete( client.idClient )" class="ps-2">delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+</main>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        
+        
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="client.idClient == undefined">Ajouter un client</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="client.idClient != undefined">Editer un client</h5>
+                    <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+            <form name="villeForm" (submit)="submitForm()">
+                    
+
+                    <div class="alert alert-danger" *ngIf="error">Une erreur est survenue, veuillez vérifier votre saisie
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" minlength="2" required [(ngModel)]="client.nomCompletClient">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Email" minlength="2" required [(ngModel)]="client.emailClient">
+                    </div>
+                    <div class="mb-3">
+                        <label for="telephone" class="form-label">Tel</label>
+                        <input type="text" class="form-control" id="tel" name="telephone" placeholder="Tel" minlength="2" required [(ngModel)]="client.telephoneClient">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="adresse" class="form-label">Adresse</label>
+                        <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Adresse" minlength="2" required [(ngModel)]="client.adresseClient">
+                    </div>
+                    <button type="submit" class="btn btn-secondary" id="submitbtn">Valider</button>
+
+                </form>
+                    </div>
+                </div>
+
+            
+        
+
+<div class="row">
+    <ng-container *ngFor="let client of clients">
+        <ng-container *ngTemplateOutlet="clientCardTemplate;context:{item:client}"></ng-container>
+    </ng-container>
+</div>
+
+<ng-template #clientCardTemplate let-client="item">
+    <div class="col-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{client.nom}}
+                    <!-- manque les {{ }} -->
+                </h5>
+                <p class="card-text">
+                    Tel : {{client.email}}
+                    <br> Email : {{client.adressel}}
+                </p>
+            </div>
+        </div>
+    </div>
+</ng-template>

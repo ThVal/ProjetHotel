@@ -45,7 +45,7 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
                     .csrf()
                     .disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // On utilise pas les sessions, toute req est déconnectée suite à l'exécution
                     .and().authorizeRequests(authorize -> authorize
-                            .anyRequest().hasRole("ADMIN")
+                            .anyRequest().authenticated() //hasRole("ADMIN")
                     )
                     .httpBasic();
         }
