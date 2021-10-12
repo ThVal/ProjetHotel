@@ -6,8 +6,8 @@ export class Reservation {
 
             //comme Java 
             idReservation : number | undefined
-            clientId: Client | undefined;
-            hotelId: Hotel| undefined;
+            client: Client | undefined;
+            hotel: Hotel| undefined;
             dateDebut: Date | undefined
             dateFin : Date| undefined;
             numChambre: number| undefined;
@@ -17,8 +17,8 @@ export class Reservation {
         
             constructor(_id?:number | undefined, _clientId?: Client  | undefined, _hotelId?: Hotel | undefined,_datedeb?: Date | undefined,_datefin?: Date | undefined, _numbChambre?: number| undefined){
                 this.idReservation = _id;
-                this.clientId = _clientId;
-                this.hotelId= _hotelId;
+                this.client = _clientId;
+                this.hotel= _hotelId;
                 this.dateDebut = _datedeb;
                 this.dateFin = _datefin
                 this.numChambre = _numbChambre

@@ -35,8 +35,8 @@
             <tr *ngFor="let reservation of reservations">
                 
                 <td>{{ reservation.idReservation}}</td>
-                <td>{{ reservation.clientId?.nomCompletClient}}</td>
-                <td>{{ reservation.hotelId?.nom}}</td>
+                <td>{{ reservation.client?.nomCompletClient}}</td>
+                <td>{{ reservation.hotel?.nom}}</td>
                 <td>{{ reservation.dateDebut}}</td>
                 <td>{{ reservation.dateFin}}</td>
                 <td>{{ reservation.numChambre}}</td>
@@ -70,13 +70,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="telephone" class="form-label">client Id</label>
-                        <input type="text" class="form-control" id="tel" name="telephone" placeholder="client" minlength="2" required [(ngModel)]="reservation.clientId">
+                        <label for="client" class="form-label">client Id</label>
+                        <input type="text" class="form-control" id="client" name="client" placeholder="client" minlength="2" required [(ngModel)]="reservation.client">
                     </div>
 
                     <div class="mb-3">
-                        <label for="email" class="form-label">hotel Id</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="hotel" minlength="2" required [(ngModel)]="reservation.hotelId">
+                        <label for="hotel" class="form-label">hotel Id</label>
+                        <input type="text" class="form-control" id="hotel" name="hotel" placeholder="hotel" minlength="2" required [(ngModel)]="reservation.hotel">
                     </div>
 
                     <div class="mb-3">

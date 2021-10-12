@@ -64,7 +64,6 @@ public class ReservationService {
 
 
     @Transactional
-    // CREATE
     public ReservationsEntity addReservation(int clientId,
                                              int hotelId,
                                              Date datedeb,
