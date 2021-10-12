@@ -1,1 +1,99 @@
-<p>reservation works!</p>
+<main class="container">
+    <div class="alert alert-success" *ngIf="success">Opération effectuée avec succès</div>
+
+    <div class="h2">Liste des réservations</div>
+    <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary float-end" (click)="resetForm()">nouvelle 
+        reservation</button>
+
+    <br><br>
+    <div class="row">
+        <div class="col-9">
+            <div class="input-group mb-3 clearfix">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Rechercher une reservation" aria-describedby="basic-addon1" [(ngModel)]="search">
+            </div>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btn-primary" (click)="loadReservation()">Rechercher</button>
+        </div>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Client</th>
+                <th>Hotel</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Numéro de chambre</th>
+                
+                <th><i class="fa fa-cogs"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reservation of reservations">
+                <td>{{ reservation.idReservation}}</td>
+                <td>{{ reservation.clientId}}</td>
+                <td>{{ reservation.hotelId}}</td>
+                <td>{{ reservation.dateDebut}}</td>
+                <td>{{ reservation.dateFin}}</td>
+                <td>{{ reservation.numChambre}}</td>
+            
+                <td><button (click)="edit( reservation.idReservation)" data-bs-toggle="modal" data-bs-target="#exampleModal">edit</button>
+                    <button (click)="delete( reservation.idReservation )" class="ps-2">delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+</main>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        
+        
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="reservation.idReservation == undefined">Ajouter une reserv</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="reservation.idReservation != undefined">Editer une reserv</h5>
+                    <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+            <form name="reservForm" (submit)="submitForm()">
+                    
+
+                    <div class="alert alert-danger" *ngIf="error">Une erreur est survenue, veuillez vérifier votre saisie
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="telephone" class="form-label">client Id</label>
+                        <input type="text" class="form-control" id="tel" name="telephone" placeholder="client" minlength="2" required [(ngModel)]="reservation.clientId">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">hotel Id</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="hotel" minlength="2" required [(ngModel)]="reservation.hotelId">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">date de début</label>
+                        <input type="date" class="form-control" id="datedeb" name="datedeb" placeholder="datedeb" minlength="2" required [(ngModel)]="reservation.dateDebut">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="datefin" class="form-label">date de fin</label>
+                        <input type="date" name="form-control" class="datedefin" id="datefin" placeholder="datefin" minlength="2" required [(ngModel)]="reservation.dateFin">
+                    </div>
+                    <div class="mb-3">
+                        <label for="numChambre" class="form-label">numéro de chambre</label>
+                        <input type="text" class="form-control" id="numChambre" name="numChambre" placeholder="numChambre" minlength="2" required [(ngModel)]="reservation.numChambre">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-secondary" id="submitbtn">Valider</button>
+
+                </form>
+                    </div>
+                </div>
