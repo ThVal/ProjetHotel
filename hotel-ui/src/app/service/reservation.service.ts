@@ -15,13 +15,13 @@ export class ReservationService {
   
   loadReservation(): Observable<Reservation[]> {
   
-  /*  let searchCondition = ""
+    let searchCondition = ""
 
-    if( search != undefined && search.length > 0 ){
-      searchCondition = "?search="+search; 
+    if( searchCondition != undefined && searchCondition.length > 0 ){
+      searchCondition = "?search="+searchCondition; 
     }
 
-    console.log("chargement des hotels" + environment.apiUrl  + "hotels"+searchCondition );*/
+    console.log("chargement des réservations" + environment.apiUrl  + "reservations"+searchCondition );
     return this.http.get<Reservation[]>( environment.apiUrl  + "reservations", httpOptions );
   }
 

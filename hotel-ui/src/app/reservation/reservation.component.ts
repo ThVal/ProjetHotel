@@ -16,10 +16,13 @@ export class ReservationComponent implements OnInit {
 
   reservation: Reservation = new Reservation();
   reservations : Array<Reservation> = [];
+
   hotel : Hotel = new Hotel();
   hotels: Array<Hotel> = [];
+
   client : Client = new Client();
   clients: Array<Client> = [];
+  
   @ViewChild( 'closebutton' ) closebuttonelement: any; 
   success : boolean = false; 
   error : boolean = false; 

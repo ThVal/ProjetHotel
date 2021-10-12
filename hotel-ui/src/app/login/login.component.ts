@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     this.adminService.authenticate(this.u).subscribe(
       (      data: any) => {
         console.log(data)
-        if (data.id > 0) {
+        if (data.idAdmin > 0) {
           sessionStorage.setItem("connectedUser" , data ); 
           console.log("redirection");
           this.router.navigate(['client'])

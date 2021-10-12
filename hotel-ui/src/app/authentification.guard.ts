@@ -20,12 +20,12 @@ export class AuthentificationGuard implements CanActivate {
     
   }
 
-  isConnected() : Boolean {
+  /*isConnected() : Boolean {
     if( sessionStorage.getItem( "connectedUser" ) )
       return true; 
     else
       return false; 
   
-  }
+  }*/
 
 }
