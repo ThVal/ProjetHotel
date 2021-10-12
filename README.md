@@ -3,6 +3,8 @@
 
 projet de gestion des clients/reservations/hotels.
 
+Back java spring boot/ front Angular
+
 
 # HotelUi
 
